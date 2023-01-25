@@ -5,6 +5,10 @@ class LogsSingleton{
 
     protected static $instancia;
 
+    private function __construct(){}
+    private function __clone(){}
+    private function __wakeup(){}
+
     public function gravarLog(array $dados){
 
         $nomeArquivo = 'logs.txt';
@@ -22,6 +26,15 @@ class LogsSingleton{
         fwrite($arquivo,json_encode($logsAnteriores));
         fclose($arquivo);
 
+    }
+
+    public static function obterInstancia():self{
+
+        if(empty(self::$instancia)){
+            self::$instancia = new self();
+        }
+
+        return self::$instancia;
     }
 
     
